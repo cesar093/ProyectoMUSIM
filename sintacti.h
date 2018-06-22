@@ -15,6 +15,7 @@ void lectura (void);
 void escritura(void);
 void condicional(void);
 void comparacion(void);
+void loop(void);
 void variable(void);
 void expresion(void);
 void termino(void);
@@ -26,6 +27,7 @@ void errores (int codigo);
 Lexico lexico; //objeto léxico miembro de la clase
 GeneraCodigo generaCodigo;
 public:
+int inter = 0;
 Sintactico(const char *fuente, const char *objeto, int traza);
 ~Sintactico(void);
 };
@@ -115,6 +117,7 @@ asignacion();
 else if (token=='R') lectura();
 else if (token=='W') escritura();
 else if (token=='I') condicional();
+else if (token=='L') loop();
 else if (token=='}') {
 lexico.devuelveToken(token);
 return;
@@ -274,6 +277,7 @@ void Sintactico::condicional(void)
 char token;
 if (lexico.existeTraza())
 cout<<"ANALISIS SINTACTICO: <CONDICIONAL>"<<endl;
+inter = 0;
 comparacion();
 token=lexico.siguienteToken();
 if ((token!=',')) errores(13);
@@ -304,10 +308,30 @@ if ((token=='=') || (token=='<')|| (token=='>')) {
 	generaCodigo.cond2(token);
 token=lexico.siguienteToken();
 if (((token>='0') && (token<='9')) || ((token>='a') && (token<='Z')) || (token='.')) {
-	generaCodigo.cond3(token);
+	if (inter == 0){ 
+		generaCodigo.cond3(token);
+		}
+	if (inter == 1){ 
+		generaCodigo.cond4(token);
+		}
 }
 }
 else errores(12);
+}
+
+
+/***********************************************************/
+void Sintactico::loop(void)
+{
+char token;
+if (lexico.existeTraza())
+cout<<"ANALISIS SINTACTICO: <LOOP>"<<endl;
+inter=1;
+comparacion();
+token=lexico.siguienteToken();
+if ((token!=',')) errores(13);
+sentencia();
+generaCodigo.etiqueta3();
 }
 
 
@@ -324,6 +348,7 @@ generaCodigo.pushc(token);
 }
 else errores(7);
 }
+
 
 /***********************************************************/
 void Sintactico::errores(int codigo)
