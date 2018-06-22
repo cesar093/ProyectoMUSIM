@@ -55,6 +55,7 @@ case'M': //palabra reservada
 case'R': //palabra reservada
 case'W': //palabra reservada
 case'I':
+case'L':
 case'=': //asignación
 case'(': //parentesis
 case')':
