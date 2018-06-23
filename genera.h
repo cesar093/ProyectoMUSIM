@@ -228,6 +228,7 @@ contetiqueta++;
 }
 
 
+
 void GeneraCodigo::end()
 {
 cout<<"END"<<endl;
