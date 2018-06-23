@@ -282,11 +282,16 @@ comparacion();
 token=lexico.siguienteToken();
 if ((token!=',')) errores(13);
 sentencia();
-generaCodigo.etiqueta();
-if ((token!=',')) errores(13);
-token=lexico.siguienteToken();
-sentencia();
-generaCodigo.etiqueta2();
+if ((token==';')) {
+	generaCodigo.etiqueta3();
+	}
+else if ((token==',')) {
+	generaCodigo.etiqueta();	
+	token=lexico.siguienteToken();
+	sentencia();
+	generaCodigo.etiqueta2();
+	}
+else errores(13);
 }
 
 
@@ -307,7 +312,7 @@ token=lexico.siguienteToken();
 if ((token=='=') || (token=='<')|| (token=='>')) {
 	generaCodigo.cond2(token);
 token=lexico.siguienteToken();
-if (((token>='0') && (token<='9')) || ((token>='a') && (token<='Z')) || (token='.')) {
+if ((token>='a') && (token<='z'))  {
 	if (inter == 0){ 
 		generaCodigo.cond3(token);
 		}
